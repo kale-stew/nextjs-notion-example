@@ -8,13 +8,8 @@ const notion = new Client({
   logLevel: LogLevel.DEBUG,
 });
 const getDatabaseQueryConfig = () => {
-  let today = new Date().toISOString();
-
   const config = {
     database_id: process.env.NOTION_DATABASE_ID,
-    filter: {
-      and: [{ property: "date", date: { on_or_before: today } }],
-    },
   };
 
   return config;
@@ -28,8 +23,6 @@ const fmt = (field) => {
   switch (field.type) {
     case "date":
       return field?.date?.start;
-    case "number":
-      return field?.number;
     case "rich_text":
       return field?.rich_text[0]?.plain_text;
     case "title":
@@ -38,40 +31,30 @@ const fmt = (field) => {
 };
 
 /**
- * Fetch list of climbs from Notion db
+ * Fetch list of users from Notion db
  */
-export const fetchAllClimbs = async () => {
+export const fetchAllUsers = async () => {
   const config = getDatabaseQueryConfig();
-  config.sorts = [{ property: "date", direction: "descending" }];
+  config.sorts = [{ property: "created_on", direction: "descending" }];
   let response = await notion.databases.query(config);
 
   return response.results.map((result) => {
     const {
       id,
-      properties: { date, distance, gain, hike_title },
+      properties: { created_on, email_address, name },
     } = result;
 
     return {
       id,
-      date: fmt(date),
-      title: fmt(hike_title),
-      distance: fmt(distance),
-      gain: fmt(gain),
+      date: fmt(created_on),
+      name: fmt(name),
+      email: fmt(email_address),
     };
   }, []);
 };
 
 /**
- * Filter by a 'Select' option
+ * Add a new user to the Notion db
  */
-export const fetchClimbsByFilter = async () => {};
 
-/**
- * Filter by an input str (Search functionality)
- */
-export const fetchClimbsBySearchQuery = async (/* str */) => {};
-
-/**
- * Fetch a single climb's data
- */
-export const fetchClimbData = async (/* id */) => {};
+export const postNewUser = () => {};

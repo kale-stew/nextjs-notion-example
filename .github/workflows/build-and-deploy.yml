@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build & deploy website
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out the repo under $GITHUB_WORKSPACE so this job can access it
+      - uses: actions/checkout@v2
+
+      - name: 🔧 Set remote origin
+        run: git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+
+      - name: 📦 Install node modules
+        run: npm i
+
+      - name: 👷🏻‍♀️ Build website
+        run: npm run build
+
+      - name: 🚀 Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          publish_dir: ./build
