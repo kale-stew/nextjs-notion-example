@@ -20,6 +20,14 @@ This is the solution I've chosen for this repository. Using [this well-documente
 
 For steps to set up your deploy and runner access tokens, check out the ["Getting Started" steps](https://github.com/peaceiris/actions-gh-pages#getting-started) for this Action.
 
+#### Adding Environment Variables to Github
+
+In the settings for your repository on Github, there is both an "Environments" and a "Secrets" tab. "Environments" refers to @TODO, while "Secrets" are the tokens that "Environments" will use to operate on your repository. When you initialize your gh-pages branch for the first time, a "github-pages" environment will populate this section of your repo settings. In order to deploy your website via gh-pages, you'll need to initialize 3 separate secrets:
+
+1. `GH_TOKEN`
+2. `ACTIONS_DEPLOY_KEY`
+3. `Public key of ACTIONS_DEPLOY_KEY`
+
 ### via Vercel
 
 Vercel makes continuous integration of a Next.js website via [their platform](https://vercel.com/dashboard) very straightforward. You only need to auth the dashboard into your preferred source management account (I choose to auth through Github, but Bitbucket and Gitlab are also options), select the repository you'd like to deploy, and Vercel will take care of the rest. They also make it easy to apply changes to your deployment pipeline via a user-friendly dashboard, including configuring custom domains. It's magical.

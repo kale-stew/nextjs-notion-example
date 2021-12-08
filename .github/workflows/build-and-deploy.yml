@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: 🔧 Set remote origin
-        run: git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        run: git remote set-url origin https://git:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
 
       - name: 📦 Install node modules
         run: npm i
@@ -26,5 +26,5 @@ jobs:
       - name: 🚀 Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
+          personal_token: ${{ secrets.GH_TOKEN }}
           publish_dir: ./build
