@@ -4,19 +4,12 @@ import { Client, LogLevel } from '@notionhq/client'
  * Initialize Notion client & configure a default db query
  */
 const notion = new Client({
-  auth: process.env.REACT_APP_NOTION_ACCESS_TOKEN,
+  auth: process.env.NOTION_ACCESS_TOKEN,
   logLevel: LogLevel.DEBUG,
 })
 const getDatabaseQueryConfig = () => {
-  // @TODO - make it one week ago? "user sign-ups within the last week"
-  let today = new Date().toISOString()
-
   const config = {
-    database_id: process.env.REACT_APP_NOTION_DATABASE_ID,
-    // @TODO - uncomment this when we get the ISO string for "one week before today"
-    // filter: {
-    //   and: [{ property: "created_on", date: { on_or_before: aWeekAgo } }],
-    // },
+    database_id: process.env.NOTION_DATABASE_ID,
   }
 
   return config
@@ -28,8 +21,8 @@ const getDatabaseQueryConfig = () => {
  */
 const fmt = (field) => {
   switch (field.type) {
-    case 'date':
-      return field?.date?.start
+    case 'created_time':
+      return field?.created_time
     case 'rich_text':
       return field?.rich_text[0]?.plain_text
     case 'title':
@@ -53,7 +46,7 @@ export const fetchAllUsers = async () => {
 
     return {
       id,
-      date: fmt(created_on),
+      date_created: fmt(created_on),
       name: fmt(name),
       email: fmt(email_address),
     }
@@ -63,5 +56,4 @@ export const fetchAllUsers = async () => {
 /**
  * Add a new user to the Notion db
  */
-
 export const postNewUser = () => {}

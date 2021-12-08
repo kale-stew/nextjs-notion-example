@@ -1,12 +1,22 @@
-# React x Notion
+# Next.js x Notion
 
-This website is a sample newsletter sign-up page that incorporates a backend hosted in a [Notion](https://notion.so) database with a simple [React](https://reactjs.org) frontend. It has a page to view all existing users, and a page for new users to sign-up on. The database itself is hosted in Notion, and you can view it in realtime [here](https://www.notion.so/notiondenver/2b41ff18697742c094696d0dda317a23?v=0ed93d3d67eb4de0a4410466fd5ef9eb).
+This website is a sample newsletter sign-up page that incorporates a backend hosted in a [Notion](https://notion.so) database with a simple [Next.js](https://nextjs.org) frontend. It has a page to view all existing users, and a page for new users to sign-up on. The database itself is hosted in Notion, and you can view it in realtime [here](https://www.notion.so/notiondenver/2b41ff18697742c094696d0dda317a23?v=0ed93d3d67eb4de0a4410466fd5ef9eb).
 
 This sample site is deployed using [Github Pages](https://pages.github.com) but you can substitute this step for a variety of other deployment hosts, including [Vercel](https://vercel.com/dashboard) or [Netlify](https://www.netlify.com) -- see the [Deployment](#deployment) section below for more information on how to set those alternatives up.
+
+**Why I Made This**
+
+When I first went to integrate my many Notion databases with smaller frontends I had built out for smaller projects, I kept running into the same issue: the Notion API does not allow you to call it from the browser, so it does not work with a "vanilla" React application. You need to implement server-side rendering (a.k.a. SSR) to access the SDK. Next.js is one of the easiest ways to do this.
+
+Notion doesn't and cannot have a no-cors policy as it would open the API up for abuse. Cors access policies exist to limit access to an API, and when that API is exchanging credentials connected to paid accounts, this can get a little too risky.
+
+There are a number of other ways to connect a Notion database with a SPA frontend, but this is the simplest I've found.
 
 ## Development
 
 First, you'll need to remove the `.example` extension from the `.env.example` file at the root of this repository. Once this is done, substitute the placeholder text in that file with your unique `NOTION_ACCESS_TOKEN` and `NOTION_DATABASE_ID`. If you need help finding these values within your own workspace, follow [these instructions in the Notion API setup docs](https://developers.notion.com/docs/getting-started).
+
+**Important:** Don't forget to "share" your page in Notion with the integration once you've created it in the Notion UI. I've found that this step is easily overlooked and it will prevent your integration from even seeing the database.
 
 ### Adding new Notion queries
 
