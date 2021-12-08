@@ -4,7 +4,7 @@ import { Client, LogLevel } from '@notionhq/client'
  * Initialize Notion client & configure a default db query
  */
 const notion = new Client({
-  auth: process.env.NOTION_ACCESS_TOKEN,
+  auth: process.env.REACT_APP_NOTION_ACCESS_TOKEN,
   logLevel: LogLevel.DEBUG,
 })
 const getDatabaseQueryConfig = () => {
@@ -12,7 +12,7 @@ const getDatabaseQueryConfig = () => {
   let today = new Date().toISOString()
 
   const config = {
-    database_id: process.env.NOTION_DATABASE_ID,
+    database_id: process.env.REACT_APP_NOTION_DATABASE_ID,
     // @TODO - uncomment this when we get the ISO string for "one week before today"
     // filter: {
     //   and: [{ property: "created_on", date: { on_or_before: aWeekAgo } }],
